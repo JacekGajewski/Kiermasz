@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:visibility="visible"
+    android:fitsSystemWindows="true"
+    android:focusableInTouchMode="true"
+    android:background="@drawable/books6">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="7"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/aclonica"
+        android:gravity="center"
+        android:text="KIERMASZ"
+        android:textColor="@color/white"
+        android:textSize="42sp" />
+
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_autorization_facebook"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="20dp"
+        app:cardBackgroundColor="#425C8D"
+        app:cardElevation="10dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentStart="true"
+                android:padding="8dp"
+                android:src="@drawable/ic_facebook" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:text="Facebook"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_autorization_google"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="20dp"
+        app:cardBackgroundColor="#008CDE"
+        app:cardElevation="10dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="4dp"
+                android:src="@drawable/ic_google" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="Google"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <LinearLayout
+        android:id="@+id/linear_log"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginTop="20dp">
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/card_autorization_login"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            app:cardBackgroundColor="#99000000"
+            app:cardElevation="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/borders"
+                android:gravity="center"
+                android:text="Log In"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/card_autorization_signup"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="8dp"
+            android:layout_weight="1"
+            app:cardBackgroundColor="#99000000"
+            app:cardElevation="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/borders"
+                android:gravity="center"
+                android:text="Sign Up"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+
+        </android.support.v7.widget.CardView>
+
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/text_autorization_anonymously"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1.4"
+        android:layout_marginTop="15dp"
+        android:layout_gravity="center_horizontal"
+        android:text="Login anonymously"
+        android:textColor="@color/white" />
+
+    <TextView
+        android:id="@+id/text_main_forgotpassword"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1.4"
+        android:layout_marginTop="0dp"
+        android:layout_gravity="center_horizontal"
+        android:text="I forgot password"
+        android:textColor="@color/white" />
+
+
+</LinearLayout>

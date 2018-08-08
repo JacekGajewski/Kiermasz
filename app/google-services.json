@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "242794647414",
+    "firebase_url": "https://kiermasz-7b74a.firebaseio.com",
+    "project_id": "kiermasz-7b74a",
+    "storage_bucket": "kiermasz-7b74a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:242794647414:android:3fe32ac8513ba67a",
+        "android_client_info": {
+          "package_name": "com.tnt9.kiermasz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "242794647414-rb3sfrl3bg8plqqnk7aciom1evjeo43a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tnt9.kiermasz",
+            "certificate_hash": "416276a0c566f2327c0b21a3fcc1b4f182dcdef4"
+          }
+        },
+        {
+          "client_id": "242794647414-97aie0pb4ius8l2k9j26trq4lihgod7g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtre12wMsXnp5h9onI6AF-G2TFMCCc1CY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "242794647414-97aie0pb4ius8l2k9j26trq4lihgod7g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
