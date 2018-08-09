@@ -36,6 +36,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore:17.0.3'
     implementation 'com.firebaseui:firebase-ui-firestore:4.1.0'
     implementation "com.google.firebase:firebase-auth:16.0.2"
+    implementation 'com.google.android.gms:play-services-auth:15.0.1'
+
 
     //Butter Knife
     implementation 'com.jakewharton:butterknife:8.8.1'

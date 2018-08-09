@@ -1,39 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:visibility="visible"
-    android:fitsSystemWindows="true"
-    android:focusableInTouchMode="true"
-    android:background="@drawable/books6">
+    android:background="@drawable/books6"
+    android:visibility="visible">
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="7"
-        android:layout_marginEnd="32dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="20dp"
+        android:id="@+id/text_authorization_app_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:fontFamily="@font/aclonica"
-        android:gravity="center"
-        android:text="KIERMASZ"
+        android:text="@string/app_name"
         android:textColor="@color/white"
-        android:textSize="42sp" />
+        android:textSize="42sp"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintVertical_bias="0.265"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
+    <EditText
+        android:id="@+id/edit_authorization_help"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_bias="0.21"
+        app:layout_constraintTop_toBottomOf="@+id/text_authorization_app_name"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="#00000000" />
 
     <android.support.v7.widget.CardView
-        android:id="@+id/card_autorization_facebook"
+        android:id="@+id/card_authorization_facebook"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="50dp"
         android:layout_marginEnd="32dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="20dp"
         app:cardBackgroundColor="#425C8D"
-        app:cardElevation="10dp">
+        app:cardElevation="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_bias="0.052"
+        app:layout_constraintTop_toBottomOf="@+id/edit_authorization_help"
+        app:layout_constraintBottom_toBottomOf="parent">
+        <!--0.357-->
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -60,15 +73,18 @@
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
-        android:id="@+id/card_autorization_google"
+        android:id="@+id/card_authorization_google"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="50dp"
         android:layout_marginEnd="32dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="20dp"
         app:cardBackgroundColor="#008CDE"
-        app:cardElevation="10dp">
+        app:cardElevation="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_bias="0.085"
+        app:layout_constraintTop_toBottomOf="@+id/card_authorization_facebook"
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -93,78 +109,79 @@
 
     </android.support.v7.widget.CardView>
 
-    <LinearLayout
-        android:id="@+id/linear_log"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_authorization_login"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
         android:layout_marginStart="32dp"
+        app:cardBackgroundColor="#99000000"
+        app:cardElevation="10dp"
+        app:layout_constraintEnd_toStartOf="@+id/card_authorization_signup"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_bias="0.12"
+        app:layout_constraintTop_toBottomOf="@+id/card_authorization_google"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/borders"
+            android:gravity="center"
+            android:text="Log In"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_authorization_signup"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
         android:layout_marginEnd="32dp"
-        android:layout_marginTop="20dp">
+        android:layout_marginStart="16dp"
+        app:cardBackgroundColor="#99000000"
+        app:cardElevation="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toEndOf="@+id/card_authorization_login"
+        app:layout_constraintTop_toTopOf="@+id/card_authorization_login">
 
-        <android.support.v7.widget.CardView
-            android:id="@+id/card_autorization_login"
-            android:layout_width="0dp"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginEnd="8dp"
-            android:layout_weight="1"
-            app:cardBackgroundColor="#99000000"
-            app:cardElevation="10dp">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/borders"
-                android:gravity="center"
-                android:text="Log In"
-                android:textColor="@color/white"
-                android:textSize="18sp" />
-
-        </android.support.v7.widget.CardView>
-
-        <android.support.v7.widget.CardView
-            android:id="@+id/card_autorization_signup"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="8dp"
-            android:layout_weight="1"
-            app:cardBackgroundColor="#99000000"
-            app:cardElevation="10dp">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/borders"
-                android:gravity="center"
-                android:text="Sign Up"
-                android:textColor="@color/white"
-                android:textSize="18sp" />
-
-
-        </android.support.v7.widget.CardView>
-
-
-    </LinearLayout>
+            android:background="@drawable/borders"
+            android:gravity="center"
+            android:text="Sign Up"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+    </android.support.v7.widget.CardView>
 
     <TextView
-        android:id="@+id/text_autorization_anonymously"
+        android:id="@+id/text_authorization_anonymously"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_weight="1.4"
-        android:layout_marginTop="15dp"
-        android:layout_gravity="center_horizontal"
+        android:layout_height="wrap_content"
         android:text="Login anonymously"
-        android:textColor="@color/white" />
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/card_authorization_login"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.15"/>
 
     <TextView
         android:id="@+id/text_main_forgotpassword"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_weight="1.4"
-        android:layout_marginTop="0dp"
-        android:layout_gravity="center_horizontal"
-        android:text="I forgot password"
-        android:textColor="@color/white" />
+        android:layout_height="wrap_content"
+        android:text="Forgot your password?"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_bias="0.1"
+        app:layout_constraintTop_toBottomOf="@+id/text_authorization_anonymously"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
-
-</LinearLayout>
+</android.support.constraint.ConstraintLayout>

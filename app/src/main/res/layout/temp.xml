@@ -170,8 +170,8 @@
         android:layout_height="42dp"
         android:orientation="horizontal"
         android:layout_marginTop="10dp"
-        android:paddingStart="110dp"
-        android:paddingEnd="110dp">
+        android:paddingStart="90dp"
+        android:paddingEnd="90dp">
 
         <ImageView
             android:layout_width="0dp"

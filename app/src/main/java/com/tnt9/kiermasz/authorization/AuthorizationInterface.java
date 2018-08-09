@@ -6,4 +6,7 @@ public interface AuthorizationInterface {
     public void passwordForgottenClicked();
     public void signUp();
     public void logIn();
+    public void logInAnonymously();
+    public void logInGoogle();
+    public void logInFacebook();
 }
