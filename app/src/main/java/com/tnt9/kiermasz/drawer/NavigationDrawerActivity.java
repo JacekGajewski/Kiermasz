@@ -1,4 +1,4 @@
-package com.tnt9.kiermasz;
+package com.tnt9.kiermasz.drawer;
 
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -12,6 +12,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.tnt9.kiermasz.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

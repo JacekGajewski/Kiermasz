@@ -26,6 +26,7 @@ import com.tnt9.kiermasz.authorization.AuthorizationInterface;
 import com.tnt9.kiermasz.authorization.LoginFragment;
 import com.tnt9.kiermasz.authorization.PasswordRecoveryFragment;
 import com.tnt9.kiermasz.authorization.SignUpFragment;
+import com.tnt9.kiermasz.drawer.NavigationDrawerActivity;
 
 public class MainActivity extends AppCompatActivity implements AuthorizationInterface{
 
