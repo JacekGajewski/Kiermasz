@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements AuthorizationInte
     private static final String TAG_PASSWORD_RECOVERY = "password_recovery";
     public static String CURRENT_TAG = TAG_AUTHORIZATION;
     private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener authListener;
 
     // 1) Layout is moved when keyboard is closing.
     // 2) Add progress bar to authorization fragments.
@@ -46,7 +47,6 @@ public class MainActivity extends AppCompatActivity implements AuthorizationInte
     @Override
     protected void onStart() {
         super.onStart();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
         //updateUI(currentUser);
     }
 
@@ -56,6 +56,24 @@ public class MainActivity extends AppCompatActivity implements AuthorizationInte
         setContentView(R.layout.activity_main);
 
         mAuth = FirebaseAuth.getInstance();
+        if (mAuth.getCurrentUser() != null) {
+            startActivity(new Intent(MainActivity.this, BottomNavigationActivity.class));
+            finish();
+        }
+
+        authListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    // user auth state is changed - user is null
+                    // launch login activity
+                    startActivity(new Intent(MainActivity.this,
+                            BottomNavigationActivity.class));
+                    finish();
+                }
+            }
+        };
 
         CURRENT_TAG = TAG_AUTHORIZATION;
         startFragment(new AuthorizationFragment());
@@ -86,11 +104,7 @@ public class MainActivity extends AppCompatActivity implements AuthorizationInte
 
     @Override
     public void logIn() {
-        Intent intent = new Intent(this, NavigationDrawerActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        startActivity(intent);
+        updateUI(null);
     }
 
     @Override
@@ -192,7 +206,7 @@ public class MainActivity extends AppCompatActivity implements AuthorizationInte
     }
 
     private void updateUI(FirebaseUser firebaseUser){
-        Intent intent = new Intent(this, NavigationDrawerActivity.class);
+        Intent intent = new Intent(this, BottomNavigationActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
