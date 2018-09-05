@@ -10,31 +10,62 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class BookActivity extends AppCompatActivity {
 
-    @BindView(R.id.toolbar_add_book) Toolbar toolbar;
-    @BindView(R.id.input_layout_add_book_title) TextInputLayout titleInputLayout;
-    @BindView(R.id.input_layout_add_book_author) TextInputLayout authorInputLayout;
-    @BindView(R.id.edit_text_add_book_title) TextInputEditText titleInputEditText;
-    @BindView(R.id.edit_text_add_book_author) TextInputEditText authorInputEditText;
+    @BindView(R.id.toolbar_add_book)
+    Toolbar toolbar;
+    @BindView(R.id.book_image)
+    ImageView coverImageView;
+    @BindView(R.id.book_title)
+    TextView titleTextView;
+    @BindView(R.id.book_author)
+    TextView authorTextView;
+
+    FirebaseFirestore db;
+    Book book;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book);
         ButterKnife.bind(this);
-
         setSupportActionBar(toolbar);
+        db = FirebaseFirestore.getInstance();
 
+        String title = getIntent().getStringExtra(StaggeredFragment.KEY_BOOK);
 
+        DocumentReference docRef = db.collection("books").document(title);
+        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                book = documentSnapshot.toObject(Book.class);
+                updateUI();
+            }
+        });
 
+    }
 
+    private void updateUI() {
+        titleTextView.setText(book.getTitle());
+        authorTextView.setText(book.getAuthor());
 
-
+        Glide.with(this).load(book.getImageURL())
+                .asBitmap()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(coverImageView);
     }
 }
