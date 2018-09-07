@@ -43,6 +43,7 @@
         android:layout_gravity="bottom"
         app:itemIconTint="@drawable/selector_bottombar"
         app:itemTextColor="@drawable/selector_bottombar"
+        app:labelVisibilityMode="labeled"
         app:menu="@menu/bottombar_menu"/>
 
 

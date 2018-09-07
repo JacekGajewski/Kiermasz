@@ -45,5 +45,8 @@ dependencies {
 
     //Glide image
     implementation 'com.github.bumptech.glide:glide:3.7.0'
+
+    //Circle ImageView
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
 }
 apply plugin: 'com.google.gms.google-services'

@@ -7,11 +7,13 @@ import android.support.design.bottomnavigation.LabelVisibilityMode;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -30,6 +32,8 @@ public class BottomNavigationActivity extends AppCompatActivity {
     public static String CURRENT_TAG = "";
     private static final String FRAGMENT_KEY = "fragment_key";
 
+    private BottomNavigationView bottomNavigationView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +48,7 @@ public class BottomNavigationActivity extends AppCompatActivity {
         }
         startFragment();
 
-        BottomNavigationView bottomNavigationView = findViewById(R.id.BottomNavigationView_bottom_navigation);
+        bottomNavigationView = findViewById(R.id.BottomNavigationView_bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -64,13 +68,15 @@ public class BottomNavigationActivity extends AppCompatActivity {
 
                         return true;
                     case R.id.action_profile:
-                        // TODO
+                        CURRENT_TAG = TAG_PROFILE;
+                        startFragment();
                         return true;
                 }
                 return false;
             }
         });
-        bottomNavigationView.setLabelVisibilityMode(LabelVisibilityMode.LABEL_VISIBILITY_LABELED);
+
+//       bottomNavigationView.setLabelVisibilityMode(LabelVisibilityMode.LABEL_VISIBILITY_LABELED);
     }
 
     @Override
@@ -117,6 +123,7 @@ public class BottomNavigationActivity extends AppCompatActivity {
         switch (CURRENT_TAG) {
             case TAG_HOME:
                 fragment = new StaggeredFragment();
+                break;
             case TAG_LOCATION:
 //                startActivity(new Intent(getApplicationContext(), AddBookActivity.class));
             case TAG_FIRE:
@@ -124,22 +131,49 @@ public class BottomNavigationActivity extends AppCompatActivity {
             case TAG_STH:
 
             case TAG_PROFILE:
-                // TODD
+                fragment = new ProfileFragment();
+                break;
             default:
                 fragment = new StaggeredFragment();
         }
 
         showAppLayout();
 
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        final FragmentManager fragmentManager = getSupportFragmentManager();
+        final int count = fragmentManager.getBackStackEntryCount();
+
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 //        fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
 //                android.R.anim.fade_out);
 //        fragmentTransaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out, android.R.anim.fade_in, android.R.anim.fade_out );
         fragmentTransaction.replace(R.id.frame2, fragment, CURRENT_TAG)
-                .addToBackStack(null)
+                .addToBackStack(CURRENT_TAG)
                 .commit();
 //        fragmentTransaction.commitAllowingStateLoss();
+
+//        fragmentManager.addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
+//            @Override
+//            public void onBackStackChanged() {
+//                if( fragmentManager.getBackStackEntryCount() <= count){
+//                    // pop all the fragment and remove the listener
+//                    fragmentManager.popBackStack(FRAGMENT_OTHER, POP_BACK_STACK_INCLUSIVE);
+//                    fragmentManager.removeOnBackStackChangedListener(this);
+//                    // set the home button selected
+//                    navigation.getMenu().getItem(0).setChecked(true);
+//                }
+//            }
+//        });
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (CURRENT_TAG.equals(TAG_HOME)) finish();
+        CURRENT_TAG = TAG_HOME;
+        bottomNavigationView.setSelectedItemId(R.id.action_home);
+        startFragment();
+    }
+
 
     public void showAppLayout(){
         AppBarLayout appBarLayout = findViewById(R.id.appBarLayout_bottomNavigation);
