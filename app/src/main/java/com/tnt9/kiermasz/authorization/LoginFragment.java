@@ -28,9 +28,8 @@ public class LoginFragment extends Fragment {
     @BindView(R.id.edit_login_password) EditText passwordEditText;
 
     private AuthorizationInterface mCallback;
-    private FirebaseAuth auth;
-    Activity activity;
-
+    private FirebaseAuth mFirebaseAuth;
+    private Activity mActivity;
 
     @Override
     public void onAttach(Context context) {
@@ -43,30 +42,27 @@ public class LoginFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.fragment_login, container, false);
         ButterKnife.bind(this, view);
-        activity = getActivity();
-
-        auth = FirebaseAuth.getInstance();
+        mActivity = getActivity();
+        mFirebaseAuth = FirebaseAuth.getInstance();
         return view;
     }
 
 
     @OnClick(R.id.card_login_login)
     public void loginClicked(){
-
         String email = emailEditText.getText().toString();
         String password = passwordEditText.getText().toString();
 
         if (password.length() < getResources().getInteger(R.integer.min_password_length)){
-            Toast.makeText(activity, "Too short password", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mActivity, "Too short password", Toast.LENGTH_SHORT).show();
 
         }else if (!email.contains("@") || !email.contains(".") ||
                 email.length() < getResources().getInteger(R.integer.min_email_length)){
-            Toast.makeText(activity, "Wrong email", Toast.LENGTH_SHORT).show();
-
+            Toast.makeText(mActivity, "Wrong email", Toast.LENGTH_SHORT).show();
         }
         else {
-            auth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(activity, new OnCompleteListener<AuthResult>() {
+            mFirebaseAuth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(mActivity, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()){
@@ -86,5 +82,4 @@ public class LoginFragment extends Fragment {
     public void forgotPasswordClicked(){
         mCallback.passwordForgottenClicked();
     }
-
 }

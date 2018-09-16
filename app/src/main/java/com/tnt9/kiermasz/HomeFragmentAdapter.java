@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,14 +21,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class StaggeredBookAdapter extends FirestoreRecyclerAdapter<Book, StaggeredBookAdapter.BookHolder>{
+public class HomeFragmentAdapter extends FirestoreRecyclerAdapter<Book, HomeFragmentAdapter.BookHolder>{
 
-    private static final String TAG = StaggeredBookAdapter.class.getSimpleName();
+    private static final String TAG = HomeFragmentAdapter.class.getSimpleName();
 
-    private Activity activity;
-    StaggeredBookAdapter(@NonNull FirestoreRecyclerOptions<Book> options, Activity activity) {
+    private Activity mActivity;
+    HomeFragmentAdapter(@NonNull FirestoreRecyclerOptions<Book> options, Activity activity) {
         super(options);
-        this.activity = activity;
+        this.mActivity = activity;
     }
 
     public interface onBookClickListener{
@@ -40,7 +39,7 @@ public class StaggeredBookAdapter extends FirestoreRecyclerAdapter<Book, Stagger
 
     private onBookClickListener onBookClickListener;
 
-    public void setOnBookClickListener(StaggeredBookAdapter.onBookClickListener onBookClickListener) {
+    public void setOnBookClickListener(HomeFragmentAdapter.onBookClickListener onBookClickListener) {
         this.onBookClickListener = onBookClickListener;
     }
 
@@ -51,7 +50,7 @@ public class StaggeredBookAdapter extends FirestoreRecyclerAdapter<Book, Stagger
         final String url = (model.getImageURL());
         holder.titleTextView.setText(title);
         holder.authorTextView.setText(model.getAuthor());
-        Glide.with(activity).load(model.getImageURL())
+        Glide.with(mActivity).load(model.getImageURL())
                 .asBitmap()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(holder.coverImageView);
@@ -65,7 +64,7 @@ public class StaggeredBookAdapter extends FirestoreRecyclerAdapter<Book, Stagger
             }
         });
 
-        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        holder.watchlistCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (onBookClickListener != null)
@@ -79,29 +78,18 @@ public class StaggeredBookAdapter extends FirestoreRecyclerAdapter<Book, Stagger
     @NonNull
     @Override
     public BookHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.card,
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.book_holder,
                 viewGroup, false);
         return new BookHolder(view);
     }
 
     public class BookHolder extends RecyclerView.ViewHolder{
 
-//        @BindView(R.id.image_book_holder_cover)
-//        ImageView coverImageView;
-//        @BindView(R.id.text_book_holder_title)
-//        TextView titleTextView;
-//        @BindView(R.id.text_book_holder_author)
-//        TextView authorTextView;
-        @BindView(R.id.card_view)
-        CardView bookCardView;
-        @BindView(R.id.book_image)
-        ImageView coverImageView;
-        @BindView(R.id.book_title)
-        TextView titleTextView;
-        @BindView(R.id.book_author)
-        TextView authorTextView;
-        @BindView(R.id.book_checkbox)
-        CheckBox checkBox;
+        @BindView(R.id.image_book_holder_cover) ImageView coverImageView;
+        @BindView(R.id.text_book_holder_title) TextView titleTextView;
+        @BindView(R.id.text_book_holder_author) TextView authorTextView;
+        @BindView(R.id.card_book_holder) CardView bookCardView;
+        @BindView(R.id.checkbox_book_holder_watchlist) CheckBox watchlistCheckbox;
 
         BookHolder(@NonNull View itemView) {
             super(itemView);

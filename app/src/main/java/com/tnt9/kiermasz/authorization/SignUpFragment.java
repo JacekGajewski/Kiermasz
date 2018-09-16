@@ -6,15 +6,10 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -34,9 +29,9 @@ public class SignUpFragment extends Fragment {
     @BindView(R.id.edit_signup_password) EditText passwordEditText;
     @BindView(R.id.edit_signup_repeat_password) EditText repeatPasswordEditText;
 
-    private FirebaseAuth auth;
+    private FirebaseAuth mFirebaseAuth;
     private AuthorizationInterface mCallback;
-    Activity activity;
+    private Activity mActivity;
 
     @Override
     public void onAttach(Context context) {
@@ -49,9 +44,8 @@ public class SignUpFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_signup, container, false);
         ButterKnife.bind(this, view);
-        activity = getActivity();
-        auth = FirebaseAuth.getInstance();
-
+        mActivity = getActivity();
+        mFirebaseAuth = FirebaseAuth.getInstance();
         return view;
     }
 
@@ -62,23 +56,23 @@ public class SignUpFragment extends Fragment {
         String repeatPassword = repeatPasswordEditText.getText().toString();
 
         if (!password.equals(repeatPassword)){
-            Toast.makeText(activity, "Passwords do not match", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mActivity, "Passwords do not match", Toast.LENGTH_SHORT).show();
 
         }else if (password.length() < getResources().getInteger(R.integer.min_password_length)){
-            Toast.makeText(activity, "Too short password", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mActivity, "Too short password", Toast.LENGTH_SHORT).show();
 
         }else if (!email.contains("@") || !email.contains(".") ||
                 email.length() < getResources().getInteger(R.integer.min_email_length)){
-            Toast.makeText(activity, "Wrong email", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mActivity, "Wrong email", Toast.LENGTH_SHORT).show();
 
         }
         else {
-            auth.createUserWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(activity, new OnCompleteListener<AuthResult>() {
+            mFirebaseAuth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(mActivity, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (!task.isSuccessful()) {
-                                Toast.makeText(activity, "Authentication failed." + task.getException(),
+                                Toast.makeText(mActivity, "Authentication failed." + task.getException(),
                                         Toast.LENGTH_SHORT).show();
                             } else {
                                 mCallback.signUp();
@@ -92,7 +86,7 @@ public class SignUpFragment extends Fragment {
             callback = OnTextChanged.Callback.TEXT_CHANGED)
     public void passwordChanged(){
         if (passwordEditText.getText().toString().equals(repeatPasswordEditText.getText().toString())){
-            Toast.makeText(activity, "OK", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mActivity, "OK", Toast.LENGTH_SHORT).show();
         }
     }
 }

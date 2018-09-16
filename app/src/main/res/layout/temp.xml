@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:visibility="visible"
-    android:background="@drawable/books6">
+    android:background="@drawable/image_book_background">
 
 
     <TextView
@@ -178,7 +178,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:layout_gravity="center"
-            android:src="@drawable/facebook_circle" />
+            android:src="@drawable/ic_facebook_circle" />
 
         <ImageView
             android:layout_width="0dp"

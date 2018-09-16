@@ -39,45 +39,32 @@ import butterknife.OnFocusChange;
 public class AddBookActivity extends AppCompatActivity {
 
 
-    @BindView(R.id.image_add_book_cover)
-    ImageView imageAddBookCover;
-    @BindView(R.id.edit_text_add_book_title)
-    TextInputEditText editTextAddBookTitle;
-    @BindView(R.id.edit_text_add_book_author)
-    TextInputEditText editTextAddBookAuthor;
-    @BindView(R.id.edit_text_add_book_image_url)
-    TextInputEditText editTextAddBookImageURL;
-    @BindView(R.id.edit_text_add_book_publisher)
-    TextInputEditText editTextAddBookPublisher;
-    @BindView(R.id.edit_text_add_book_date_published)
-    TextInputEditText editTextAddBookDatePublished;
-    @BindView(R.id.edit_text_add_book_pages)
-    TextInputEditText editTextAddBookPages;
-    @BindView(R.id.edit_text_add_book_date_isbn)
-    TextInputEditText editTextAddBookDateIsbn;
-    @BindView(R.id.edit_text_add_book_date_language)
-    TextInputEditText editTextAddBookDateLanguage;
-    @BindView(R.id.edit_text_add_book_description)
-    TextInputEditText editTextAddBookDescription;
-    @BindView(R.id.card_add_book_book)
-    CardView cardAddBookBook;
-    @BindView(R.id.card_add_book_upload)
-    CardView cardAddBookUpload;
+    @BindView(R.id.image_add_book_cover) ImageView imageAddBookCover;
+    @BindView(R.id.edit_add_book_title) TextInputEditText editTextAddBookTitle;
+    @BindView(R.id.edit_add_book_author) TextInputEditText editTextAddBookAuthor;
+    @BindView(R.id.edit_add_book_image_url) TextInputEditText editTextAddBookImageURL;
+    @BindView(R.id.edit_add_book_publisher) TextInputEditText editTextAddBookPublisher;
+    @BindView(R.id.edit_add_book_date_published) TextInputEditText editTextAddBookDatePublished;
+    @BindView(R.id.edit_add_book_pages) TextInputEditText editTextAddBookPages;
+    @BindView(R.id.edit_add_book_date_isbn) TextInputEditText editTextAddBookDateIsbn;
+    @BindView(R.id.edit_add_book_date_language) TextInputEditText editTextAddBookDateLanguage;
+    @BindView(R.id.edit_add_book_description) TextInputEditText editTextAddBookDescription;
+    @BindView(R.id.card_add_book) CardView cardAddBookBook;
+    @BindView(R.id.card_add_book_upload) CardView cardAddBookUpload;
 
     private static final String TAG = AddBookActivity.class.getSimpleName();
-    private FirebaseFirestore db;
+    private FirebaseFirestore mFirestore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_book);
         ButterKnife.bind(this);
-        db = FirebaseFirestore.getInstance();
+        mFirestore = FirebaseFirestore.getInstance();
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar_bottom_navigation);
         setSupportActionBar(toolbar);
         ActionBar actionbar = getSupportActionBar();
-        assert actionbar != null;
         actionbar.setDisplayHomeAsUpEnabled(true);
     }
 
@@ -143,7 +130,7 @@ public class AddBookActivity extends AppCompatActivity {
             }else uploadData("");
     }
 
-    @OnFocusChange(R.id.edit_text_add_book_image_url)
+    @OnFocusChange(R.id.edit_add_book_image_url)
     public void editPublisherFocusChanged(boolean hasFocus){
         if (!hasFocus) {
             String urlNavHeaderBg = Objects.requireNonNull(editTextAddBookImageURL.getText()).toString();
@@ -165,7 +152,7 @@ public class AddBookActivity extends AppCompatActivity {
         String description = Objects.requireNonNull(editTextAddBookDescription.getText()).toString();
 
         Book book = new Book(title, author, url, publisher, date, numberOfPages, ISBN, language, description);
-        db.collection("books").document(title).set(book)
+        mFirestore.collection("books").document(title).set(book)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {

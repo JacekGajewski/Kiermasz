@@ -10,18 +10,19 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="148dp"
+        android:layout_height="132dp"
         android:background="@color/colorPrimaryDark">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/circle_image_view"
+            android:id="@+id/circle_image_profile_avatar"
             android:layout_width="wrap_content"
-            android:paddingTop="32dp"
+            android:paddingTop="16dp"
             android:layout_height="wrap_content"
-            android:src="@drawable/steve"
+            android:src="@drawable/image_steve"
             android:layout_centerInParent="true"/>
 
         <ImageView
+            android:id="@+id/image_profile_mail"
             android:layout_width="36dp"
             android:layout_height="36dp"
             android:src="@drawable/ic_mail"
@@ -31,9 +32,8 @@
 
     </RelativeLayout>
 
-
-
     <TextView
+        android:id="@+id/text_profile_nick"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="12dp"
@@ -44,6 +44,7 @@
         android:text="Steve"/>
 
     <TextView
+        android:id="@+id/text_profile_location"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -54,8 +55,10 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="72dp"
         android:orientation="horizontal"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
         android:background="@color/colorPrimaryDark">
         
         <LinearLayout
@@ -73,6 +76,7 @@
                 android:text="Sell" />
 
             <TextView
+                android:id="@+id/text_profile_sell_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
@@ -85,8 +89,8 @@
             android:layout_width="1dp"
             android:layout_height="match_parent"
             android:background="@color/white"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"/>
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"/>
 
         <LinearLayout
             android:layout_width="0dp"
@@ -103,6 +107,7 @@
                 android:text="Buy"/>
 
             <TextView
+                android:id="@+id/text_profile_buy_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
@@ -115,8 +120,8 @@
             android:layout_width="1dp"
             android:layout_height="match_parent"
             android:background="@color/white"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"/>
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"/>
 
         <LinearLayout
             android:layout_width="0dp"
@@ -133,6 +138,7 @@
                 android:text="Exchange"/>
 
             <TextView
+                android:id="@+id/text_profile_exchange_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
@@ -168,6 +174,7 @@
             android:textColor="@color/colorPrimaryDark"/>
 
         <TextView
+            android:id="@+id/text_profile_books_count"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center_vertical|end"
@@ -209,6 +216,7 @@
             android:textColor="@color/colorPrimaryDark"/>
 
         <TextView
+            android:id="@+id/text_profile_review_count"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center_vertical|end"
@@ -250,7 +258,7 @@
             android:textColor="@color/colorPrimaryDark"/>
 
         <Switch
-            android:id="@+id/switch1"
+            android:id="@+id/switch_profile_public"
             android:layout_width="wrap_content"
             android:layout_height="match_parent" />
 
@@ -288,6 +296,7 @@
             android:textColor="@color/colorPrimaryDark"/>
 
         <ImageView
+            android:id="@+id/image_profile_settings"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_gravity="end"

@@ -17,7 +17,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.tnt9.kiermasz.drawer.NavigationDrawerActivity;
+import com.tnt9.kiermasz.authorization.MainActivity;
 
 public class BottomNavigationActivity extends AppCompatActivity {
 
@@ -30,7 +30,7 @@ public class BottomNavigationActivity extends AppCompatActivity {
     public static String CURRENT_TAG = "";
     private static final String FRAGMENT_KEY = "fragment_key";
 
-    private BottomNavigationView bottomNavigationView;
+    private BottomNavigationView mBottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,14 +40,13 @@ public class BottomNavigationActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar_bottom_navigation);
         setSupportActionBar(toolbar);
 
-
         if (savedInstanceState != null){
             CURRENT_TAG = savedInstanceState.getString(FRAGMENT_KEY);
         }
         startFragment();
 
-        bottomNavigationView = findViewById(R.id.BottomNavigationView_bottom_navigation);
-        bottomNavigationView.setOnNavigationItemSelectedListener(
+        mBottomNavigationView = findViewById(R.id.BottomNavigationView_bottom_navigation);
+        mBottomNavigationView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -74,8 +73,7 @@ public class BottomNavigationActivity extends AppCompatActivity {
                 return false;
             }
         });
-
-//       bottomNavigationView.setLabelVisibilityMode(LabelVisibilityMode.LABEL_VISIBILITY_LABELED);
+//       mBottomNavigationView.setLabelVisibilityMode(LabelVisibilityMode.LABEL_VISIBILITY_LABELED);
     }
 
     @Override
@@ -89,7 +87,7 @@ public class BottomNavigationActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_drawer:
-                startActivity(new Intent(getApplicationContext(), NavigationDrawerActivity.class));
+
                 return true;
             case R.id.action_add:
                 startActivity(new Intent(getApplicationContext(), AddBookActivity.class));
@@ -117,11 +115,10 @@ public class BottomNavigationActivity extends AppCompatActivity {
     }
 
     private void startFragment(){
-
         Fragment fragment;
         switch (CURRENT_TAG) {
             case TAG_HOME:
-                fragment = new StaggeredFragment();
+                fragment = new HomeFragment();
                 break;
             case TAG_LOCATION:
 //                startActivity(new Intent(getApplicationContext(), AddBookActivity.class));
@@ -134,7 +131,7 @@ public class BottomNavigationActivity extends AppCompatActivity {
                 fragment = new ProfileFragment();
                 break;
             default:
-                fragment = new StaggeredFragment();
+                fragment = new HomeFragment();
         }
 
         showAppLayout();
@@ -170,10 +167,9 @@ public class BottomNavigationActivity extends AppCompatActivity {
         super.onBackPressed();
         if (CURRENT_TAG.equals(TAG_HOME)) finish();
         CURRENT_TAG = TAG_HOME;
-        bottomNavigationView.setSelectedItemId(R.id.action_home);
+        mBottomNavigationView.setSelectedItemId(R.id.action_home);
         startFragment();
     }
-
 
     public void showAppLayout(){
         AppBarLayout appBarLayout = findViewById(R.id.appBarLayout_bottomNavigation);

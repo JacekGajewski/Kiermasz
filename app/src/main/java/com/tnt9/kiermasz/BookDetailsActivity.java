@@ -29,61 +29,53 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class BookActivity extends AppCompatActivity {
+public class BookDetailsActivity extends AppCompatActivity {
 
-    @BindView(R.id.toolbar_add_book)
-    Toolbar toolbar;
-    @BindView(R.id.book_image)
-    ImageView coverImageView;
-    @BindView(R.id.book_title)
-    TextView titleTextView;
-    @BindView(R.id.book_author)
-    TextView authorTextView;
-    @BindView(R.id.book_checkbox)
-    CheckBox checkBox;
+    @BindView(R.id.toolbar_add_book) Toolbar toolbar;
+    @BindView(R.id.image_book_details_cover) ImageView coverImageView;
+    @BindView(R.id.text_book_details_title) TextView titleTextView;
+    @BindView(R.id.text_book_details_author) TextView authorTextView;
+    @BindView(R.id.checkbox_book_details_watchlist) CheckBox checkBox;
 
-    FirebaseFirestore db;
-    FirebaseAuth mAuth;
+    private static final String TAG = BookDetailsActivity.class.getSimpleName();
 
-    private Book book;
-    private String bookTitle;
-    private String bookAuthor;
-    private String bookUrl;
+    private FirebaseFirestore mFirestore;
+    private FirebaseAuth mFirebaseAuth;
 
-    private static final String TAG = BookActivity.class.getSimpleName();
+    private Book mBook;
+    private String mBookTitle;
+    private String mBookAuthor;
+    private String mBookUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_book);
+        setContentView(R.layout.activity_book_details);
         ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
 
+        mFirestore = FirebaseFirestore.getInstance();
+        mBookTitle = getIntent().getStringExtra(HomeFragment.EXTRA_BOOK_TITLE);
+        mBookAuthor = getIntent().getStringExtra(HomeFragment.EXTRA_BOOK_AUTHOR);
+        mBookUrl = getIntent().getStringExtra(HomeFragment.EXTRA_BOOK_URL);
 
-        db = FirebaseFirestore.getInstance();
-        bookTitle = getIntent().getStringExtra(StaggeredFragment.KEY_BOOK_TITLE);
-        bookAuthor = getIntent().getStringExtra(StaggeredFragment.KEY_BOOK_AUTHOR);
-        bookUrl = getIntent().getStringExtra(StaggeredFragment.KEY_BOOK_URL);
-
-
-        DocumentReference docRef = db.collection("books").document(bookTitle);
+        DocumentReference docRef = mFirestore.collection("books").document(mBookTitle);
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                book = documentSnapshot.toObject(Book.class);
+                mBook = documentSnapshot.toObject(Book.class);
                 updateUI();
             }
         });
 
-
-        mAuth = FirebaseAuth.getInstance();
-        db.collection("users")
-                .document(Objects.requireNonNull(mAuth.getUid()))
+        mFirebaseAuth = FirebaseAuth.getInstance();
+        mFirestore.collection("users")
+                .document(Objects.requireNonNull(mFirebaseAuth.getUid()))
                 .collection("watchlist")
-                .whereEqualTo("title", bookTitle)
+                .whereEqualTo("title", mBookTitle)
                 .whereEqualTo("watchlist", 1)
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -95,14 +87,14 @@ public class BookActivity extends AppCompatActivity {
                 });
     }
 
-    @OnClick(R.id.book_checkbox)
+    @OnClick(R.id.checkbox_book_details_watchlist)
     public void checkboxChanged(CheckBox checkBox){
 
         if (checkBox.isChecked()){
 
-            String address = mAuth.getUid() + "_" + bookTitle;
-            Book book = new Book(mAuth.getUid(), bookTitle, bookAuthor, bookUrl);
-            db.collection("likes").document(address).set(book)
+            String address = mFirebaseAuth.getUid() + "_" + mBookTitle;
+            Book book = new Book(mFirebaseAuth.getUid(), mBookTitle, mBookAuthor, mBookUrl);
+            mFirestore.collection("likes").document(address).set(book)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
@@ -116,15 +108,14 @@ public class BookActivity extends AppCompatActivity {
                         }
                     });
 
-
             Map<String, Object> data = new HashMap<>();
-            data.put("title", bookTitle);
+            data.put("title", mBookTitle);
             data.put("watchlist", 1);
 
-            db.collection("users")
-                    .document(Objects.requireNonNull(mAuth.getUid()))
+            mFirestore.collection("users")
+                    .document(Objects.requireNonNull(mFirebaseAuth.getUid()))
                     .collection("watchlist")
-                    .document(bookTitle)
+                    .document(mBookTitle)
                     .set(data)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
@@ -139,13 +130,11 @@ public class BookActivity extends AppCompatActivity {
                             Log.w(TAG, "Error adding document", e);
                         }
                     });
-
-
         }else {
 
-            String address = mAuth.getUid() + "_" + bookTitle;
+            String address = mFirebaseAuth.getUid() + "_" + mBookTitle;
 
-            db.collection("likes").document(address)
+            mFirestore.collection("likes").document(address)
                     .delete()
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
@@ -160,10 +149,10 @@ public class BookActivity extends AppCompatActivity {
                         }
                     });
 
-            db.collection("users")
-                    .document(Objects.requireNonNull(mAuth.getUid()))
+            mFirestore.collection("users")
+                    .document(Objects.requireNonNull(mFirebaseAuth.getUid()))
                     .collection("watchlist")
-                    .document(bookTitle)
+                    .document(mBookTitle)
                     .update("watchlist", 0)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
@@ -177,15 +166,14 @@ public class BookActivity extends AppCompatActivity {
                             Log.w(TAG, "Error updating document", e);
                         }
                     });
-
         }
 
     }
     private void updateUI() {
-        titleTextView.setText(book.getTitle());
-        authorTextView.setText(book.getAuthor());
+        titleTextView.setText(mBook.getTitle());
+        authorTextView.setText(mBook.getAuthor());
 
-        Glide.with(this).load(book.getImageURL())
+        Glide.with(this).load(mBook.getImageURL())
                 .asBitmap()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(coverImageView);

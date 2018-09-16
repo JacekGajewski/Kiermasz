@@ -30,12 +30,12 @@
         android:padding="10dp">
 
         <ImageView
-            android:id="@+id/book_image"
+            android:id="@+id/image_book_details_cover"
             android:layout_width="0dp"
             android:layout_weight="1.1"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
-            tools:src="@drawable/ekonomia_dla_kazdego"/>
+            tools:src="@drawable/image_ekonomia_dla_kazdego"/>
 
         <LinearLayout
             android:layout_width="0dp"
@@ -45,7 +45,7 @@
             android:layout_marginStart="15dp">
 
             <TextView
-                android:id="@+id/book_title"
+                android:id="@+id/text_book_details_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
@@ -53,30 +53,22 @@
                 android:textSize="18sp"/>
 
             <TextView
-                android:id="@+id/book_author"
+                android:id="@+id/text_book_details_author"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 tools:text="Ludwig von Mises"/>
 
             <TextView
-                android:id="@+id/book_rating"
+                android:id="@+id/text_book_details_rating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="4.9/5"
                 tools:text="5.0/5"/>
 
-            <TextView
-                android:id="@+id/book_wishlist"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:text="true"
-                tools:text="true"/>
-
             <CheckBox
-                android:id="@+id/book_checkbox"
+                android:id="@+id/checkbox_book_details_watchlist"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 

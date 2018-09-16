@@ -15,8 +15,7 @@ import butterknife.OnClick;
 
 public class AuthorizationFragment extends Fragment {
 
-
-    AuthorizationInterface mCallback;
+    private AuthorizationInterface mCallback;
 
     @Override
     public void onAttach(Context context) {

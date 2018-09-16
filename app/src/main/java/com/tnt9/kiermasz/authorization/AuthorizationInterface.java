@@ -1,12 +1,12 @@
 package com.tnt9.kiermasz.authorization;
 
 public interface AuthorizationInterface {
-    public void logInClicked();
-    public void signUpClicked();
-    public void passwordForgottenClicked();
-    public void signUp();
-    public void logIn();
-    public void logInAnonymously();
-    public void logInGoogle();
-    public void logInFacebook();
+    void logInClicked();
+    void signUpClicked();
+    void passwordForgottenClicked();
+    void signUp();
+    void logIn();
+    void logInAnonymously();
+    void logInGoogle();
+    void logInFacebook();
 }

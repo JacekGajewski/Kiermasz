@@ -8,7 +8,6 @@
     style="@style/TestTheme"
     tools:context=".BottomNavigationActivity">
 
-
     <FrameLayout
         android:id="@+id/frame2"
         android:layout_width="match_parent"
@@ -17,23 +16,7 @@
         tools:background="#EFEFEF"
         android:paddingBottom="56dp"/>
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/appBarLayout_bottomNavigation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar_bottom_navigation"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorPrimary"
-            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:layout_scrollFlags="scroll|enterAlways"/>
-
-    </android.support.design.widget.AppBarLayout>
-
+    <include layout="@layout/app_bar"/>
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/BottomNavigationView_bottom_navigation"
@@ -45,7 +28,5 @@
         app:itemTextColor="@drawable/selector_bottombar"
         app:labelVisibilityMode="labeled"
         app:menu="@menu/bottombar_menu"/>
-
-
 
 </android.support.design.widget.CoordinatorLayout>

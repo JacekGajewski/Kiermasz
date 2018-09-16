@@ -1,4 +1,4 @@
-package com.tnt9.kiermasz;
+package com.tnt9.kiermasz.authorization;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -21,24 +21,19 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
-import com.tnt9.kiermasz.authorization.AuthorizationFragment;
-import com.tnt9.kiermasz.authorization.AuthorizationInterface;
-import com.tnt9.kiermasz.authorization.LoginFragment;
-import com.tnt9.kiermasz.authorization.PasswordRecoveryFragment;
-import com.tnt9.kiermasz.authorization.SignUpFragment;
-import com.tnt9.kiermasz.drawer.NavigationDrawerActivity;
+import com.tnt9.kiermasz.BottomNavigationActivity;
+import com.tnt9.kiermasz.R;
 
 public class MainActivity extends AppCompatActivity implements AuthorizationInterface{
 
     private static final String TAG = MainActivity.class.getSimpleName();
-
     private static final String TAG_AUTHORIZATION = "authorization";
     private static final String TAG_LOGIN = "login";
     private static final String TAG_SIGNUP = "signup";
     private static final String TAG_PASSWORD_RECOVERY = "password_recovery";
     public static String CURRENT_TAG = TAG_AUTHORIZATION;
     private FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener authListener;
+    private FirebaseAuth.AuthStateListener mAuthListener;
 
     // 1) Layout is moved when keyboard is closing.
     // 2) Add progress bar to authorization fragments.
@@ -61,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements AuthorizationInte
             finish();
         }
 
-        authListener = new FirebaseAuth.AuthStateListener() {
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
@@ -179,7 +174,7 @@ public class MainActivity extends AppCompatActivity implements AuthorizationInte
 //        fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
 //                android.R.anim.fade_out);
 //        fragmentTransaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out, android.R.anim.fade_in, android.R.anim.fade_out );
-        fragmentTransaction.replace(R.id.frame, fragment, CURRENT_TAG)
+        fragmentTransaction.replace(R.id.frame_main, fragment, CURRENT_TAG)
                 .addToBackStack(null)
                 .commit();
 //        fragmentTransaction.commitAllowingStateLoss();

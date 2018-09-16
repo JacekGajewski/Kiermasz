@@ -2,8 +2,6 @@ package com.tnt9.kiermasz;
 
 public class Book {
 
-
-
     private String userId;
     private String title;
     private String author;
@@ -52,51 +50,91 @@ public class Book {
         this.userId = userId;
     }
 
-    public String getPublisher() {
-        return publisher;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public String getImageURL() {
-        return imageURL;
-    }
-
-    public String getNumberOfPages() {
-        return numberOfPages;
-    }
-
-    public String getISBN() {
-        return ISBN;
-    }
-
-    public String getLanguage() {
-        return language;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public int getRatings() {
-        return ratings;
-    }
-
     public String getTitle() {
         return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getAuthor() {
         return author;
     }
 
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
+    }
+
+    public String getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getNumberOfPages() {
+        return numberOfPages;
+    }
+
+    public void setNumberOfPages(String numberOfPages) {
+        this.numberOfPages = numberOfPages;
+    }
+
+    public String getISBN() {
+        return ISBN;
+    }
+
+    public void setISBN(String ISBN) {
+        this.ISBN = ISBN;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public double getRating() {
         return rating;
     }
 
+    public void setRating(double rating) {
+        this.rating = rating;
+    }
 
+    public int getRatings() {
+        return ratings;
+    }
 
-
+    public void setRatings(int ratings) {
+        this.ratings = ratings;
+    }
 }

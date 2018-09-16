@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".authorization.MainActivity"
             android:windowSoftInputMode="adjustResize|stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,7 +30,7 @@
 
         <activity android:name=".drawer.NavigationDrawerActivity"
             android:parentActivityName=".BottomNavigationActivity"/>
-        <activity android:name=".BookActivity" />
+        <activity android:name=".BookDetailsActivity" />
         <activity android:name=".AddBookActivity"
             android:parentActivityName=".BottomNavigationActivity"/>
         <activity android:name=".BottomNavigationActivity"/>

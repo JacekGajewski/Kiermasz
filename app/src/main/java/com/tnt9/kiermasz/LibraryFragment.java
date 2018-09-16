@@ -4,75 +4,58 @@ package com.tnt9.kiermasz;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import butterknife.BindView;
-
 public class LibraryFragment extends Fragment {
 
-
-
-    FirebaseFirestore db;
-    FirebaseAuth mAuth;
-    StaggeredBookAdapter adapter;
-    RecyclerView view;
-
     private static final String TAG = LibraryFragment.class.getSimpleName();
-    public static final String KEY_BOOK_TITLE = "book_title";
-    public static final String KEY_BOOK_AUTHOR = "book_author";
-    public static final String KEY_BOOK_URL = "book_url";
+    public static final String EXTRA_BOOK_TITLE = "com.tnt9.kiermasz.BOOK_TITLE";
+    public static final String EXTRA_BOOK_AUTHOR = "com.tnt9.kiermasz.BOOK_AUTHOR";
+    public static final String EXTRA_BOOK_URL = "com.tnt9.kiermasz.BOOK_URL";
+
+    private FirebaseFirestore mFirestore;
+    private FirebaseAuth mFirebaseAuth;
+    private HomeFragmentAdapter mAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-
-        db = FirebaseFirestore.getInstance();
-        view = (RecyclerView) inflater.inflate(R.layout.fragment_staggered,
+        RecyclerView recyclerView = (RecyclerView) inflater.inflate(R.layout.fragment_staggered,
                 container, false);
-        mAuth = FirebaseAuth.getInstance();
+
+        mFirestore = FirebaseFirestore.getInstance();
+        mFirebaseAuth = FirebaseAuth.getInstance();
 
         Query query = FirebaseFirestore.getInstance()
                 .collection("likes")
-                .whereEqualTo("userId", mAuth.getUid());
+                .whereEqualTo("userId", mFirebaseAuth.getUid());
 
         FirestoreRecyclerOptions<Book> options =
                 new FirestoreRecyclerOptions.Builder<Book>()
                         .setQuery(query, Book.class)
                         .build();
 
-        adapter = new StaggeredBookAdapter(options, getActivity());
-        adapter.setOnBookClickListener(new StaggeredBookAdapter.onBookClickListener() {
+        mAdapter = new HomeFragmentAdapter(options, getActivity());
+        mAdapter.setOnBookClickListener(new HomeFragmentAdapter.onBookClickListener() {
             @Override
             public void onBookClicked(String bookTitle, String bookAuthor, String bookUrl) {
-                Intent intent = new Intent(getContext(), BookActivity.class);
-                intent.putExtra(KEY_BOOK_TITLE, bookTitle);
-                intent.putExtra(KEY_BOOK_AUTHOR, bookAuthor);
-                intent.putExtra(KEY_BOOK_URL, bookUrl);
+                Intent intent = new Intent(getContext(), BookDetailsActivity.class);
+                intent.putExtra(EXTRA_BOOK_TITLE, bookTitle);
+                intent.putExtra(EXTRA_BOOK_AUTHOR, bookAuthor);
+                intent.putExtra(EXTRA_BOOK_URL, bookUrl);
                 startActivity(intent);
             }
 
@@ -82,7 +65,7 @@ public class LibraryFragment extends Fragment {
                 FirebaseAuth mAuth = FirebaseAuth.getInstance();
                 String address = mAuth.getUid() + "_" + bookTitle;
 
-                db.collection("likes").document(address)
+                mFirestore.collection("likes").document(address)
                         .delete()
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
@@ -105,7 +88,7 @@ public class LibraryFragment extends Fragment {
                 FirebaseAuth mAuth = FirebaseAuth.getInstance();
                 String address = mAuth.getUid() + "_" + bookTitle;
 
-                db.collection("likes").document(address)
+                mFirestore.collection("likes").document(address)
                         .delete()
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
@@ -124,23 +107,22 @@ public class LibraryFragment extends Fragment {
         });
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-        view.setLayoutManager(layoutManager);
-        view.setHasFixedSize(true);
-        view.setAdapter(adapter);
-
-        return view;
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(mAdapter);
+        return recyclerView;
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        adapter.startListening();
+        mAdapter.startListening();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        adapter.stopListening();
+        mAdapter.stopListening();
     }
 
 }
