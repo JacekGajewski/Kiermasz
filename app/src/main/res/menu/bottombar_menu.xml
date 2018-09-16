@@ -21,9 +21,9 @@
         app:showAsAction="ifRoom"/>
 
     <item
-        android:id="@+id/action_sth"
-        android:icon="@drawable/ic_lock"
-        android:title="Sth"
+        android:id="@+id/action_library"
+        android:icon="@drawable/ic_shelf"
+        android:title="Library"
         app:showAsAction="ifRoom"/>
 
     <item

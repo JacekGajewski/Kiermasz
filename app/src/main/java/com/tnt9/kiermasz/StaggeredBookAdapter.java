@@ -7,6 +7,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -29,6 +31,8 @@ public class StaggeredBookAdapter extends FirestoreRecyclerAdapter<Book, Stagger
 
     public interface onBookClickListener{
         void onBookClicked(String bookTitle);
+        void checkboxChecked(String bookTitle, String bookAuthor, String bookUrl);
+        void checkboxUnchecked(String bookTitle);
     }
 
     private onBookClickListener onBookClickListener;
@@ -40,6 +44,8 @@ public class StaggeredBookAdapter extends FirestoreRecyclerAdapter<Book, Stagger
     @Override
     protected void onBindViewHolder(@NonNull BookHolder holder, int position, @NonNull Book model) {
         final String title = (model.getTitle());
+        final String author = (model.getAuthor());
+        final String url = (model.getImageURL());
         holder.titleTextView.setText(title);
         holder.authorTextView.setText(model.getAuthor());
         Glide.with(activity).load(model.getImageURL())
@@ -52,6 +58,15 @@ public class StaggeredBookAdapter extends FirestoreRecyclerAdapter<Book, Stagger
             public void onClick(View view) {
                 if (onBookClickListener != null)
                 onBookClickListener.onBookClicked(title);
+            }
+        });
+
+        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (onBookClickListener != null)
+                    if (b)  onBookClickListener.checkboxChecked(title, author, url);
+                    else onBookClickListener.checkboxUnchecked(title);
             }
         });
 
@@ -81,6 +96,8 @@ public class StaggeredBookAdapter extends FirestoreRecyclerAdapter<Book, Stagger
         TextView titleTextView;
         @BindView(R.id.book_author)
         TextView authorTextView;
+        @BindView(R.id.book_checkbox)
+        CheckBox checkBox;
 
         BookHolder(@NonNull View itemView) {
             super(itemView);

@@ -2,6 +2,9 @@ package com.tnt9.kiermasz;
 
 public class Book {
 
+
+
+    private String userId;
     private String title;
     private String author;
     private String imageURL;
@@ -22,6 +25,13 @@ public class Book {
         this.author = author;
     }
 
+    public Book(String userId, String title, String author, String imageURL) {
+        this.userId = userId;
+        this.title = title;
+        this.author = author;
+        this.imageURL = imageURL;
+    }
+
     public Book(String title, String author, String imageURL, String publisher, String date, String numberOfPages, String ISBN, String language, String description) {
         this.title = title;
         this.author = author;
@@ -32,6 +42,14 @@ public class Book {
         this.ISBN = ISBN;
         this.language = language;
         this.description = description;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getPublisher() {

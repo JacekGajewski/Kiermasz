@@ -4,13 +4,18 @@ package com.tnt9.kiermasz;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -25,13 +30,18 @@ import com.google.firebase.firestore.Query;
 import java.util.HashMap;
 import java.util.Map;
 
-public class StaggeredFragment extends Fragment {
+import butterknife.BindView;
+
+public class LibraryFragment extends Fragment {
+
+
 
     FirebaseFirestore db;
+    FirebaseAuth mAuth;
     StaggeredBookAdapter adapter;
     RecyclerView view;
 
-    private static final String TAG = StaggeredFragment.class.getSimpleName();
+    private static final String TAG = LibraryFragment.class.getSimpleName();
     public static final String KEY_BOOK = "book_title";
 
     @Override
@@ -42,14 +52,16 @@ public class StaggeredFragment extends Fragment {
         db = FirebaseFirestore.getInstance();
         view = (RecyclerView) inflater.inflate(R.layout.fragment_staggered,
                 container, false);
+        mAuth = FirebaseAuth.getInstance();
 
         Query query = FirebaseFirestore.getInstance()
-                .collection("books");
+                .collection("likes")
+                .whereEqualTo("userId", mAuth.getUid());
 
         FirestoreRecyclerOptions<Book> options =
                 new FirestoreRecyclerOptions.Builder<Book>()
-                .setQuery(query, Book.class)
-                .build();
+                        .setQuery(query, Book.class)
+                        .build();
 
         adapter = new StaggeredBookAdapter(options, getActivity());
         adapter.setOnBookClickListener(new StaggeredBookAdapter.onBookClickListener() {
@@ -63,25 +75,11 @@ public class StaggeredFragment extends Fragment {
             @Override
             public void checkboxChecked(String bookTitle, String bookAuthor, String bookUrl) {
 
-//                Map<String, Object> data = new HashMap<>();
-//                data.put("user", mAuth.getUid());
-//                data.put("book", bookTitle);
                 FirebaseAuth mAuth = FirebaseAuth.getInstance();
                 String address = mAuth.getUid() + "_" + bookTitle;
-//                db.collection("likes").document(address).set(data)
-//                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-//                            @Override
-//                            public void onComplete(@NonNull Task<Void> task) {
-//                                if (task.isSuccessful()){
-//                                    Toast.makeText(getContext(), "SUCCESS", Toast.LENGTH_SHORT).show();
-//                                }else{
-//                                    Toast.makeText(getContext(), "Book was not added", Toast.LENGTH_SHORT).show();
-//                                }
-//                            }
-//                        });
 
-                Book book = new Book(mAuth.getUid(), bookTitle, bookAuthor, bookUrl);
-                db.collection("likes").document(address).set(book)
+                db.collection("likes").document(address)
+                        .delete()
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
@@ -140,4 +138,5 @@ public class StaggeredFragment extends Fragment {
         super.onStop();
         adapter.stopListening();
     }
+
 }

@@ -3,7 +3,6 @@ package com.tnt9.kiermasz;
 import android.content.Intent;
 import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
-import android.support.design.bottomnavigation.LabelVisibilityMode;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -13,7 +12,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -27,7 +25,7 @@ public class BottomNavigationActivity extends AppCompatActivity {
     private static final String TAG_HOME = "home";
     private static final String TAG_LOCATION = "location";
     private static final String TAG_FIRE = "fire";
-    private static final String TAG_STH = "sth";
+    private static final String TAG_LIBRARY = "library";
     private static final String TAG_PROFILE = "profile";
     public static String CURRENT_TAG = "";
     private static final String FRAGMENT_KEY = "fragment_key";
@@ -64,8 +62,9 @@ public class BottomNavigationActivity extends AppCompatActivity {
                     case R.id.action_location:
 
                         return true;
-                    case R.id.action_sth:
-
+                    case R.id.action_library:
+                        CURRENT_TAG = TAG_LIBRARY;
+                        startFragment();
                         return true;
                     case R.id.action_profile:
                         CURRENT_TAG = TAG_PROFILE;
@@ -128,8 +127,9 @@ public class BottomNavigationActivity extends AppCompatActivity {
 //                startActivity(new Intent(getApplicationContext(), AddBookActivity.class));
             case TAG_FIRE:
 //                startActivity(new Intent(getApplicationContext(), NavigationDrawerActivity.class));
-            case TAG_STH:
-
+            case TAG_LIBRARY:
+                fragment = new LibraryFragment();
+                break;
             case TAG_PROFILE:
                 fragment = new ProfileFragment();
                 break;
