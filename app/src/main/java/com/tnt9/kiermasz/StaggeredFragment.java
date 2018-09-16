@@ -32,7 +32,9 @@ public class StaggeredFragment extends Fragment {
     RecyclerView view;
 
     private static final String TAG = StaggeredFragment.class.getSimpleName();
-    public static final String KEY_BOOK = "book_title";
+    public static final String KEY_BOOK_TITLE = "book_title";
+    public static final String KEY_BOOK_AUTHOR = "book_author";
+    public static final String KEY_BOOK_URL = "book_url";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -54,9 +56,11 @@ public class StaggeredFragment extends Fragment {
         adapter = new StaggeredBookAdapter(options, getActivity());
         adapter.setOnBookClickListener(new StaggeredBookAdapter.onBookClickListener() {
             @Override
-            public void onBookClicked(String bookTitle) {
+            public void onBookClicked(String bookTitle, String bookAuthor, String bookUrl) {
                 Intent intent = new Intent(getContext(), BookActivity.class);
-                intent.putExtra(KEY_BOOK, bookTitle);
+                intent.putExtra(KEY_BOOK_TITLE, bookTitle);
+                intent.putExtra(KEY_BOOK_AUTHOR, bookAuthor);
+                intent.putExtra(KEY_BOOK_URL, bookUrl);
                 startActivity(intent);
             }
 

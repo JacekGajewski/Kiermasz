@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,8 @@ import butterknife.ButterKnife;
 
 public class StaggeredBookAdapter extends FirestoreRecyclerAdapter<Book, StaggeredBookAdapter.BookHolder>{
 
+    private static final String TAG = StaggeredBookAdapter.class.getSimpleName();
+
     private Activity activity;
     StaggeredBookAdapter(@NonNull FirestoreRecyclerOptions<Book> options, Activity activity) {
         super(options);
@@ -30,7 +33,7 @@ public class StaggeredBookAdapter extends FirestoreRecyclerAdapter<Book, Stagger
     }
 
     public interface onBookClickListener{
-        void onBookClicked(String bookTitle);
+        void onBookClicked(String bookTitle, String bookAuthor, String bookUrl);
         void checkboxChecked(String bookTitle, String bookAuthor, String bookUrl);
         void checkboxUnchecked(String bookTitle);
     }
@@ -56,8 +59,9 @@ public class StaggeredBookAdapter extends FirestoreRecyclerAdapter<Book, Stagger
         holder.bookCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (onBookClickListener != null)
-                onBookClickListener.onBookClicked(title);
+                if (onBookClickListener != null){
+                    onBookClickListener.onBookClicked(title, author, url);
+                }
             }
         });
 
